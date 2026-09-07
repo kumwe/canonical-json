@@ -4,6 +4,9 @@
 
 ## 0.1.0
 
+- Unify PR and post-rebase release gates, dynamic release identity, tested publication retries,
+  and administrator setup across the package family. Preserve immutable release and dependency evidence requirements.
+
 ### Added
 
 - Generic canonical JSON semantic profile, portable finding vocabulary and bounded operation metadata.
