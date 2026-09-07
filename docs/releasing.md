@@ -33,7 +33,7 @@ A repository maintainer must complete these settings before retrying publication
    A disabled/evaluate-only ruleset or one targeting a different branch does not.
 2. Open [Settings > General](https://github.com/kumwe/canonical-json/settings), scroll to **Releases**, and select
    **Enable release immutability** (or confirm the organization enforces it for this repository). GitHub documents
-   the setting in [Prevent release changes](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/establish-provenance-and-integrity/prevent-release-changes).
+   this policy in [Immutable releases][immutable-releases-docs].
    Set this before the first publication: existing mutable releases are not made immutable by enabling the setting.
 
 Using GitHub CLI authenticated as a maintainer with repository Administration read access, run:
@@ -43,7 +43,7 @@ bash tools/check-release-settings.sh
 ```
 
 This read-only check reports both settings independently and never changes them. The
-[immutable-releases endpoint](https://docs.github.com/en/rest/repos/repos#check-if-immutable-releases-are-enabled-for-a-repository)
+[immutable-releases endpoint][immutable-releases-api]
 requires Administration read permission. A failed or unavailable lookup is not proof that the setting is enabled;
 verify it in Settings. The normal Actions token cannot perform this administrative check, so it is deliberately
 not used in CI. The workflow still verifies the actual release's immutable flag after publication.
@@ -59,6 +59,9 @@ Manual dispatch reruns the complete package gate before publishing the recorded 
 skipped. Live branch metadata allows a new run to observe corrected settings; rerunning an older workflow
 revision still executes that older revision. Keep the recorded version unchanged when no tag or release was
 created. Existing tags and releases remain subject to all integrity checks below; never move a published tag.
+
+[immutable-releases-docs]: https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases
+[immutable-releases-api]: https://docs.github.com/rest/repos/repos#check-if-immutable-releases-are-enabled-for-a-repository
 
 ## Artifact and consumer verification
 
