@@ -13,8 +13,8 @@ Before the first merge that publishes, a maintainer must protect main and enable
 The release job refuses mutations unless github.ref_protected is true and checks the published release's
 immutable flag before declaring success. These are separate from green package CI. GitHub immutability applies
 only to future releases, so enable it before publication; the workflow cannot repair a mutable prior release.
-See https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/establish-provenance-and-integrity/
-prevent-release-changes for the platform policy. No administrative token is introduced into workflows.
+GitHub's "Prevent release changes" documentation describes this platform policy.
+No administrative token is introduced into workflows.
 
 The built ZIP installs as a dependency in a fresh no-dev/no-scripts/no-plugins/classmap-authoritative Composer
 project. Its package repository points to that ZIP, never a path checkout. Packagist is disabled for the PHP-only

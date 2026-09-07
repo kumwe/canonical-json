@@ -289,3 +289,8 @@ that ZIP as a real dependency with Packagist disabled and no dev/plugins/scripts
 shipped paths, documented types, corpus checksum and example through the consumer autoloader.
 Final-head CI results and exact tested commit/archive identity belong to external evidence, not this file.
 No App adoption, native execution, publication or roadmap acceptance is claimed by these package checks.
+
+Observed locally on PHP 8.5.10: 9 tests and 568 assertions pass, including 79 corpus vectors; strict
+PHPStan, PSR-12, documentation, manifests, architecture and the 28-file archive consumer pass. App's
+actual strict PackageManifests loader accepts this package as v2-manifested. The local combined check
+was stopped by the advisory endpoint timing out; its online security result is established by CI.
