@@ -43,7 +43,7 @@ bash tools/check-release-settings.sh
 ```
 
 This read-only check reports both settings independently and never changes them. The
-[immutable-releases endpoint][immutable-releases-api]
+[immutable-releases endpoint][immutable-api]
 requires Administration read permission. A failed or unavailable lookup is not proof that the setting is enabled;
 verify it in Settings. The normal Actions token cannot perform this administrative check, so it is deliberately
 not used in CI. The workflow still verifies the actual release's immutable flag after publication.
@@ -61,7 +61,7 @@ revision still executes that older revision. Keep the recorded version unchanged
 created. Existing tags and releases remain subject to all integrity checks below; never move a published tag.
 
 [immutable-releases-docs]: https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases
-[immutable-releases-api]: https://docs.github.com/rest/repos/repos#check-if-immutable-releases-are-enabled-for-a-repository
+[immutable-api]: https://docs.github.com/rest/repos/repos#check-if-immutable-releases-are-enabled-for-a-repository
 
 ## Artifact and consumer verification
 
