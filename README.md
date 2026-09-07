@@ -53,3 +53,12 @@ audit/idempotency integration, lifecycle, delivery and recovery.
 See [MIGRATION-HANDOFF.md](MIGRATION-HANDOFF.md) for exact paths and gates,
 [releasing](docs/releasing.md) for release-on-record and compatibility,
 and [security](docs/security.md) for resource refusals and reporting. Licensed Apache-2.0.
+
+## Explicit generic execution port
+
+`Kumwe\CanonicalJson\CanonicalEncoder` declares `encode(mixed): string` and `digest(mixed): string`.
+Portable packages receive this contract explicitly. No executor, container provider or runtime selector
+is shipped here. The implementation must preserve GenericV1 bytes, ordered refusals and operation limits;
+digest enforces the same limits as encoding. Computation owns the native adapter after verified native
+releases. App may adapt its existing executor during the staged adoption, retaining its tests until the
+Computation cutover. Distinct Definition, SDK, Runtime and Studio profiles keep their current owners.

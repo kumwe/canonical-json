@@ -2,6 +2,7 @@
   "schema": "kumwe-native-semantic-ownership/v1",
   "semantic_owner": "kumwe/canonical-json",
   "composer_owned": [
+    "Kumwe\\CanonicalJson\\CanonicalEncoder",
     "Kumwe\\CanonicalJson\\FindingCode",
     "Kumwe\\CanonicalJson\\Limits",
     "Kumwe\\CanonicalJson\\Profile"

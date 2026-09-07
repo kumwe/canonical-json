@@ -1,8 +1,29 @@
 # Public API
 
-All types belong to this package, require PHP 8.5, and have no DI/provider or runtime executor.
-They perform no I/O, locking, transaction, hashing or application authority work.
-Instances/enums are immutable and can be shared across requests and workers.
+All types belong to this package and require PHP 8.5. The package ships no provider or runtime executor.
+Metadata values are immutable. The execution interface is implemented outside this package and injected
+explicitly; its implementation owns operation-state isolation and enforces the profile's Limits.
+
+## `Kumwe\CanonicalJson\CanonicalEncoder`
+
+Interface with two non-static, required methods and no properties, constructor or default implementation.
+`encode(mixed $value): string` returns complete canonical UTF-8 bytes for Profile::GenericV1.
+`digest(mixed $value): string` returns exactly 64 lowercase hexadecimal SHA-256 characters over those bytes.
+Both accept null, bool, int, finite float, valid UTF-8 string and bounded recursive arrays. They preserve
+list order, byte-sort map keys and preserve zero fractions. They reject objects, resources, non-finite
+floats, malformed UTF-8 and configured structural/input/output-limit violations with InvalidArgumentException.
+Implementations preserve ordered FindingCode identity through their documented exception mapping.
+Neither operation mutates input, invokes input callbacks, performs I/O or returns a partial result.
+Digesting applies every encode bound, including output bytes. A refusal cannot poison the next operation.
+
+Inject CanonicalEncoder into a consuming constructor or factory; do not select it through a static global,
+service locator or extension-detection fallback. Consumers retain only captured values/digests when no
+further encoding is required. Computation supplies the future native adapter after verified native releases.
+During staged App adoption, an explicit host adapter delegates to the existing App executor until cutover.
+No claim is made that the historical executor already enforces the new bounded profile: App compatibility
+tests and the subsequent native provisioning/cutover gates must establish that separately.
+The test-only Replay implementation exercises the contract and is excluded from distribution.
+Definition, runtime, SDK and Studio profiles must not be replaced by this interface without corpus proof.
 
 ## `Kumwe\CanonicalJson\Profile`
 

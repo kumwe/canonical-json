@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 0.1.1
+
+### Added
+
+- Explicit CanonicalEncoder execution port for portable idempotency, audit and integration consumers.
+  The contract preserves the generic profile and ordered bounds without shipping a runtime executor.
+- Port conformance, digest/output-budget parity and failure-recovery tests; retain all 79 corpus vectors.
+- NRM-2026-041: unblock neutral extraction through explicit injection, with native binding still owned
+  by Computation and App execution retained until the verified native cutover.
+
 ## 0.1.0
 
 - Unify PR and post-rebase release gates, dynamic release identity, tested publication retries,

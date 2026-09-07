@@ -34,6 +34,15 @@
       "boundary": [
         "Case\\MetadataTest::testSemanticManifestFreezesEnumValuesBudgetsAndCorpusIdentity"
       ]
+    },
+    "Kumwe\\CanonicalJson\\CanonicalEncoder": {
+      "behavior": [
+        "Case\\CanonicalEncoderTest::testPortPreservesGenericBytesAndDigestThroughIndependentCalls",
+        "Case\\CanonicalEncoderTest::testContractExposesOnlyExplicitValueOperationsWithoutAnExecutor"
+      ],
+      "boundary": [
+        "Case\\CanonicalEncoderTest::testBothOperationsRefuseTheSameBoundaryAndRecoverForTheNextCall"
+      ]
     }
   },
   "conformance": {
@@ -45,7 +54,8 @@
       "Case\\CorpusTest::testReferencesResourcesAndCallbacksCannotEscapeBoundsOrInvokeCode",
       "Case\\CorpusTest::testMalformedBudgetMetadataCannotSilentlyUseDefaults",
       "Case\\MetadataTest::testSemanticManifestFreezesEnumValuesBudgetsAndCorpusIdentity",
-      "Case\\MetadataTest::testEmbeddedHandoffPinsEveryPublishedManifestAndCorpus"
+      "Case\\MetadataTest::testEmbeddedHandoffPinsEveryPublishedManifestAndCorpus",
+      "Case\\CanonicalEncoderTest::testBothOperationsRefuseTheSameBoundaryAndRecoverForTheNextCall"
     ],
     "corpora": [
       "resources/corpus/v1.json",
