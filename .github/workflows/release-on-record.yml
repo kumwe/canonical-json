@@ -69,16 +69,16 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Require protected main before release mutations
-        env:
-          RELEASE_REF_PROTECTED: ${{ github.ref_protected }}
-        run: bash tools/check-release-integrity.sh protected "$RELEASE_REF_PROTECTED"
-
       - name: Check out the pushed commit
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
+
+      - name: Require protected main before release mutations
+        env:
+          RELEASE_REF_PROTECTED: ${{ github.ref_protected }}
+        run: bash tools/check-release-integrity.sh protected "$RELEASE_REF_PROTECTED"
 
       # The newest release record is the FIRST second-level heading, so a
       # malformed record fails this run loudly instead of silently
