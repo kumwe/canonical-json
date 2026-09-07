@@ -1,79 +1,48 @@
-# Release protocol
+# Releasing Canonical JSON
 
-CHANGELOG's newest second-level semantic-version heading is authoritative; Unreleased is skipped and malformed
-headings fail closed. 0.1.0 is a proposed initial record, not proof of publication.
-
-CI and release-on-record both run composer check on PHP 8.5. Publication runs only for main after a push or manual
-dispatch and after the full gate,
-serializes without cancellation, and grants write permission only to its release job. Actions use reviewed SHA pins.
-The API creates a missing tag at the exact tested main SHA only after a confirmed 404. Existing tags must belong to
-main history and match their release record; an unpublished tag must match the exact tested commit.
-Agents never push tags, enable auto-merge, change repository settings, merge or publish.
-
-Before the first merge that publishes, a maintainer must protect main and enable GitHub immutable releases.
-The workflow reads the current main branch through GitHub's API before building and again immediately before
-release mutations. It rejects unprotected main, malformed responses and API errors, and checks the published
-release's immutable flag before declaring success. These are separate from green package CI. GitHub immutability applies
-only to future releases, so enable it before publication; the workflow cannot repair a mutable prior release.
-GitHub's "Prevent release changes" documentation describes this platform policy.
-No administrative token is introduced into workflows.
-
-## Repository setup and recovery
-
-The failed release run [34128868173](https://github.com/kumwe/canonical-json/actions/runs/34128868173)
-stopped because main had no active protection. Its package gate had passed; publication had not started.
-Packagist registration does not enable GitHub branch protection or release immutability. Retrying the build
-without correcting repository settings cannot resolve this prerequisite failure.
-
-A repository maintainer must complete these settings before retrying publication:
-
-1. Open [Settings > Rules > Rulesets](https://github.com/kumwe/canonical-json/settings/rules), create or edit a
-   branch ruleset targeting `main`, and set enforcement to **Active**. Require pull requests and block force
-   pushes and deletions. An active classic branch protection rule targeting `main` also satisfies the guard.
-   A disabled/evaluate-only ruleset or one targeting a different branch does not.
-2. Open [Settings > General](https://github.com/kumwe/canonical-json/settings), scroll to **Releases**, and select
-   **Enable release immutability** (or confirm the organization enforces it for this repository). GitHub documents
-   this policy in [Immutable releases][immutable-releases-docs].
-   Set this before the first publication: existing mutable releases are not made immutable by enabling the setting.
-
-Using GitHub CLI authenticated as a maintainer with repository Administration read access, run:
+Follow the [Package release standard](package-release-standard.md) for the shared
+quality gate, changelog parsing, publication and retry behavior. Complete the
+[repository release setup](repository-release-setup.md) with an administrator
+session before merging a release record:
 
 ```bash
-bash tools/check-release-settings.sh
+bash tools/configure-release-repositories.sh --check kumwe/canonical-json
+bash tools/configure-release-repositories.sh --apply kumwe/canonical-json
 ```
 
-This read-only check reports both settings independently and never changes them. The
-[immutable-releases endpoint][immutable-api]
-requires Administration read permission. A failed or unavailable lookup is not proof that the setting is enabled;
-verify it in Settings. The normal Actions token cannot perform this administrative check, so it is deliberately
-not used in CI. The workflow still verifies the actual release's immutable flag after publication.
+The required CI check is **Package gate**. Maintainers rebase reviewed PRs into the
+repository's current default branch; the release workflow reruns the same quality
+gate on the resulting commit and derives its release identity from that run.
+A release intention in CHANGELOG.md is not evidence that publication occurred.
+Keep work that is not ready for publication under `## Unreleased`.
 
-Once settings are confirmed and this workflow is on main, select **Release on record > Run workflow > main** in
-[Actions](https://github.com/kumwe/canonical-json/actions/workflows/release-on-record.yml), or run:
-
-```bash
-gh workflow run release-on-record.yml --repo kumwe/canonical-json --ref main
-```
-
-Manual dispatch reruns the complete package gate before publishing the recorded version. Other branches are
-skipped. Live branch metadata allows a new run to observe corrected settings; rerunning an older workflow
-revision still executes that older revision. Keep the recorded version unchanged when no tag or release was
-created. Existing tags and releases remain subject to all integrity checks below; never move a published tag.
-
-[immutable-releases-docs]: https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases
-[immutable-api]: https://docs.github.com/rest/repos/repos#check-if-immutable-releases-are-enabled-for-a-repository
+Exact pre-1.0 pins are required. Semantic-only App adoption, Engine/extension
+implementation and Computation cutover remain separately gated tasks. A proposed
+initial changelog record does not prove that the package was published.
 
 ## Artifact and consumer verification
 
-The built ZIP installs as a dependency in a fresh no-dev/no-scripts/no-plugins/classmap-authoritative Composer
-project. Its package repository points to that ZIP, never a path checkout. Packagist is disabled for the PHP-only
-isolated consumer. Manifested symbols and shipped example run via that consumer's autoloader. Archive verification
-enforces the reviewed allowlist and absence of tests/tools/vendor/development state.
+The built ZIP installs as a dependency in a fresh no-dev/no-scripts/no-plugins/
+classmap-authoritative Composer project. Its package repository points to that ZIP,
+never a path checkout. Packagist is disabled for this PHP-only isolated consumer.
+Manifested symbols and the shipped example run via its consumer autoloader. Archive
+verification enforces the reviewed allowlist and excludes tests, tools, vendor and
+development state. The semantic corpus and public manifests remain mandatory
+release evidence.
 
-After initial Packagist submission, its GitHub integration follows tags without workflow credentials. Independent
-verification records tag/source, archive digest, manifests, registry coordinate, license/security evidence and clean
-consumer in external RELEASE-ATTESTATION.yaml. Never embed the artifact's final digest or invented release claims in
-its own handoff.
+## Publication evidence and recovery
 
-Exact pre-1.0 pins are required. Release defects need new versions/advisories, not tag movement.
-Semantic-only App adoption, Engine/extension implementation and Computation cutover are separately gated tasks.
+The maintainer performs the initial Packagist submission. Its GitHub integration
+then follows tags without a registry credential in CI. Before dependent publication
+or App adoption, a fresh independent verifier must bind the exact published
+source/tag, archive digest, manifests, registry coordinate, license/security and
+clean-consumer results in an external RELEASE-ATTESTATION.yaml. The artifact and
+handoff must not invent their own final commit, checksum or publication evidence.
+
+Use the current release workflow on the default branch to retry after correcting
+repository settings. Historical mutable releases remain unchanged: enabling
+immutability affects future publications, so a mutable version requires an unused
+successor. Never move or delete a published tag or replace a released artifact.
+An unpublished tag can be completed only on the exact commit tested by the retry.
+A green PR does not replace the default-branch release result or independent
+verification. Administrator credentials do not belong in Actions.

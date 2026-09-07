@@ -1,28 +1,29 @@
 #!/usr/bin/env bash
-# Fail closed on observed release-integrity metadata; no network or mutation occurs here.
+# Validate observed release metadata without network access or mutation.
 set -euo pipefail
 
-refuse_unprotected_main() {
-  echo 'Release refused: main must be protected by an active branch rule or ruleset.' >&2
-  echo 'A maintainer must activate protection for main in Settings > Rules > Rulesets or Settings > Branches.' >&2
-  echo 'Packagist registration does not configure this GitHub release prerequisite.' >&2
-  echo 'See docs/releasing.md for repository setup and retry instructions.' >&2
+refuse_protection() {
+  echo 'Release refused: the default branch must have active branch protection or an active ruleset.' >&2
+  echo 'Run tools/configure-release-repositories.sh with an administrator login; see docs/releasing.md.' >&2
   exit 1
 }
 
 case "${1:-}" in
   protected)
-    if [[ "$#" -ne 2 || "$2" != true ]]; then
-      refuse_unprotected_main
-    fi
+    [[ "$#" -eq 2 && "$2" == true ]] || refuse_protection
     ;;
-  branch)
-    # Use the current branch response, including when a failed release is retried
-    # after a maintainer changes protection. Never trust an event-time snapshot.
-    if [[ "$#" -ne 1 ]] || ! jq -es '
-      length == 1 and (.[0] | type == "object" and .name == "main" and .protected == true)
+  source)
+    # Compatibility with previously shipped fixtures; new callers pass DEFAULT_BRANCH.
+    [[ "$#" -eq 3 && "$2" == "refs/heads/${DEFAULT_BRANCH:-main}" && "$3" == true ]] || refuse_protection
+    ;;
+  branch|protected-branch)
+    [[ "$#" -le 2 ]] || refuse_protection
+    branch="${2:-${DEFAULT_BRANCH:-main}}"
+    [[ -n "$branch" ]] || refuse_protection
+    if ! jq -es --arg branch "$branch" '
+      length == 1 and (.[0] | type == "object" and .name == $branch and .protected == true)
     ' >/dev/null; then
-      refuse_unprotected_main
+      refuse_protection
     fi
     ;;
   published)
@@ -31,15 +32,18 @@ case "${1:-}" in
       exit 1
     fi
     if ! jq -es --arg tag "v$2" '
-      length == 1 and (.[0] | type == "object" and .tag_name == $tag and .draft == false and .prerelease == false
-      and .immutable == true and (.published_at | type == "string" and length > 0))
+      length == 1 and (.[0] | type == "object" and .tag_name == $tag and .draft == false
+      and .prerelease == false and .immutable == true
+      and (.published_at | type == "string" and length > 0))
     ' >/dev/null; then
       echo 'Release refused: exact version must be published, stable and immutable.' >&2
       exit 1
     fi
     ;;
   *)
-    echo 'Usage: check-release-integrity.sh protected true | branch < branch.json' >&2
+    echo 'Usage: check-release-integrity.sh protected true | source REF true' >&2
+    echo '       check-release-integrity.sh branch [BRANCH] < branch.json' >&2
+    echo '       check-release-integrity.sh protected-branch BRANCH < branch.json' >&2
     echo '       check-release-integrity.sh published VERSION < release.json' >&2
     exit 2
     ;;

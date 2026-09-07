@@ -121,6 +121,8 @@ $requiredShipped = [
     'docs/integration.md',
     'docs/public-api.md',
     'docs/releasing.md',
+    'docs/package-release-standard.md',
+    'docs/repository-release-setup.md',
     'docs/security.md',
     'examples/README.md',
     'examples/typed-consumer.php',
