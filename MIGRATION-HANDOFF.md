@@ -294,3 +294,10 @@ Observed locally on PHP 8.5.10: 9 tests and 568 assertions pass, including 79 co
 PHPStan, PSR-12, documentation, manifests, architecture and the 28-file archive consumer pass. App's
 actual strict PackageManifests loader accepts this package as v2-manifested. The local combined check
 was stopped by the advisory endpoint timing out; its online security result is established by CI.
+
+## Enforced package test ownership
+
+Portable behavior, boundary and conformance evidence is maintained in `tests/ownership.json`,
+validated against the public API and actual test-runner discovery by `composer test:ownership`.
+See `docs/test-ownership.md` for the future-change rule and the precise host boundary.
+This follow-up changes package tests/tooling only; it does not authorize early App test deletion.

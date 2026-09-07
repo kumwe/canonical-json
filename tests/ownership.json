@@ -1,0 +1,77 @@
+{
+  "schema": "kumwe-test-ownership/v1",
+  "package": "kumwe/canonical-json",
+  "api_manifest": "resources/public-api/v1.json",
+  "suite": {
+    "inventory_command": [
+      "php",
+      "tests/run.php",
+      "--list-json"
+    ]
+  },
+  "exports": {
+    "Kumwe\\CanonicalJson\\FindingCode": {
+      "behavior": [
+        "Kumwe\\CanonicalJson\\Tests\\Case\\MetadataTest::testSemanticManifestFreezesEnumValuesBudgetsAndCorpusIdentity"
+      ],
+      "boundary": [
+        "Kumwe\\CanonicalJson\\Tests\\Case\\CorpusTest::testAllVectorsAndDigestsReplayWithFrozenSourceParity"
+      ]
+    },
+    "Kumwe\\CanonicalJson\\Limits": {
+      "behavior": [
+        "Kumwe\\CanonicalJson\\Tests\\Case\\MetadataTest::testBudgetsPreserveInclusiveBoundariesAndRejectEveryInvalidParameter"
+      ],
+      "boundary": [
+        "Kumwe\\CanonicalJson\\Tests\\Case\\MetadataTest::testBudgetsPreserveInclusiveBoundariesAndRejectEveryInvalidParameter"
+      ]
+    },
+    "Kumwe\\CanonicalJson\\Profile": {
+      "behavior": [
+        "Kumwe\\CanonicalJson\\Tests\\Case\\MetadataTest::testSemanticManifestFreezesEnumValuesBudgetsAndCorpusIdentity"
+      ],
+      "boundary": [
+        "Kumwe\\CanonicalJson\\Tests\\Case\\MetadataTest::testEmbeddedHandoffPinsEveryPublishedManifestAndCorpus"
+      ]
+    }
+  },
+  "conformance": {
+    "status": "owned",
+    "rationale": "This package is the semantic profile and language-neutral corpus owner. Engine and extension replay the released corpus through their own boundaries.",
+    "tests": [
+      "Kumwe\\CanonicalJson\\Tests\\Case\\CorpusTest::testAllVectorsAndDigestsReplayWithFrozenSourceParity",
+      "Kumwe\\CanonicalJson\\Tests\\Case\\CorpusTest::testMalformedCorpusTransportIsRefusedBeforeReplay",
+      "Kumwe\\CanonicalJson\\Tests\\Case\\CorpusTest::testReferencesResourcesAndCallbacksCannotEscapeBoundsOrInvokeCode",
+      "Kumwe\\CanonicalJson\\Tests\\Case\\CorpusTest::testMalformedBudgetMetadataCannotSilentlyUseDefaults",
+      "Kumwe\\CanonicalJson\\Tests\\Case\\MetadataTest::testSemanticManifestFreezesEnumValuesBudgetsAndCorpusIdentity",
+      "Kumwe\\CanonicalJson\\Tests\\Case\\MetadataTest::testEmbeddedHandoffPinsEveryPublishedManifestAndCorpus"
+    ],
+    "corpora": [
+      "resources/corpus/v1.json",
+      "resources/corpus/v1.sha256"
+    ]
+  },
+  "architecture": [
+    "tools/verify-architecture.php"
+  ],
+  "host": {
+    "repository": "kumwe/app",
+    "baseline": "960ce8ec00cf724a7cae03e5ba09c4852c9ab54e",
+    "transfers": [
+      {
+        "source_test": "tests/Unit/Application/Automation/CanonicalJsonTest.php",
+        "action": "retain-until-runtime-cutover",
+        "package_tests": [
+          "Kumwe\\CanonicalJson\\Tests\\Case\\CorpusTest::testAllVectorsAndDigestsReplayWithFrozenSourceParity",
+          "Kumwe\\CanonicalJson\\Tests\\Case\\CorpusTest::testMalformedCorpusTransportIsRefusedBeforeReplay",
+          "Kumwe\\CanonicalJson\\Tests\\Case\\CorpusTest::testReferencesResourcesAndCallbacksCannotEscapeBoundsOrInvokeCode",
+          "Kumwe\\CanonicalJson\\Tests\\Case\\CorpusTest::testMalformedBudgetMetadataCannotSilentlyUseDefaults"
+        ],
+        "retained": "App still runs its PHP executor until the authorized Computation runtime cutover."
+      }
+    ],
+    "retained_responsibilities": [
+      "Current App PHP executor tests until Computation cutover; host digest, idempotency and audit integration."
+    ]
+  }
+}
