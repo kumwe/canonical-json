@@ -24,6 +24,25 @@ done
 refuse protected
 refuse protected true extra
 refuse unknown
+branch='{"name":"main","protected":true}'
+accept branch <<< "$branch"
+refuse branch extra <<< "$branch"
+for change in '.name = "other"' '.protected = false' '.protected = "true"' '.protected = 1' \
+  'del(.name)' 'del(.protected)'; do
+  refuse branch <<< "$(jq -c "$change" <<< "$branch")"
+done
+for malformed in '' '{}' '[]' 'null' 'true' 'not-json'; do
+  refuse branch <<< "$malformed"
+done
+refuse branch <<< "$branch $branch"
+refuse branch <<< "{} $branch"
+refuse branch <<< "$branch {}"
+# A failed API request must fail the workflow even if it wrote valid-looking JSON.
+if (set -o pipefail; { printf '%s\n' "$branch"; exit 1; } | bash "$tool" branch); then
+  echo 'Integrity gate ignored an upstream API failure.' >&2
+  exit 1
+fi
+checks=$((checks + 1))
 payload='{"tag_name":"v0.1.1","draft":false,"prerelease":false,"immutable":true,
 "published_at":"2026-09-07T00:00:00Z"}'
 accept published 0.1.1 <<< "$payload"
@@ -42,3 +61,4 @@ refuse published 0.1.1 <<< "$payload $payload"
 refuse published 0.1.1 <<< "{} $payload"
 refuse published 0.1.1 <<< "$payload {}"
 echo "Release integrity gate passed: $checks isolated fixtures."
+bash "$(dirname -- "${BASH_SOURCE[0]}")/test-release-settings.sh"

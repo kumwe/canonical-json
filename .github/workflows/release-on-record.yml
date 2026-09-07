@@ -14,6 +14,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -25,8 +26,29 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  readiness:
+    name: Check release prerequisites
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out the requested commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check current main protection before building
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/branches/main" \
+            | bash tools/check-release-integrity.sh branch
+
   check:
     name: PHP ${{ matrix.php }}
+    needs: readiness
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
@@ -75,11 +97,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Require protected main before release mutations
-        env:
-          RELEASE_REF_PROTECTED: ${{ github.ref_protected }}
-        run: bash tools/check-release-integrity.sh protected "$RELEASE_REF_PROTECTED"
-
       # The newest release record is the FIRST second-level heading, so a
       # malformed record fails this run loudly instead of silently
       # releasing nothing or re-reading an older heading.
@@ -120,6 +137,18 @@ jobs:
             echo "::error::Could not determine whether release v$VERSION exists."
             exit 1
           fi
+
+      # Recheck live state after the package gate, immediately before the
+      # first possible mutation. The workflow token needs only Contents read.
+      - name: Require current main protection before release mutations
+        if: steps.record.outputs.version != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/branches/main" \
+            | bash tools/check-release-integrity.sh branch
 
       # Only a confirmed 404 means the tag is missing; any other probe
       # failure stops the run rather than colliding with an existing tag.
