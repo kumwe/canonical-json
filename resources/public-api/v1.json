@@ -1,9 +1,52 @@
 {
     "schema": "kumwe-package-public-api/v1",
     "package": "kumwe/canonical-json",
-    "release": "0.1.0",
+    "release": "0.1.1",
     "namespace": "Kumwe\\CanonicalJson\\",
     "symbols": {
+        "Kumwe\\CanonicalJson\\CanonicalEncoder": {
+            "kind": "interface",
+            "stability": "stable",
+            "file": "src/CanonicalEncoder.php",
+            "abstract": false,
+            "final": false,
+            "readonly": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": {},
+            "properties": {},
+            "methods": {
+                "digest": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "mixed",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "string"
+                },
+                "encode": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "mixed",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "string"
+                }
+            },
+            "deprecated": null
+        },
         "Kumwe\\CanonicalJson\\FindingCode": {
             "kind": "enum",
             "stability": "stable",
@@ -136,6 +179,8 @@
             "deprecated": null
         }
     },
-    "extension_points": [],
+    "extension_points": [
+        "Kumwe\\CanonicalJson\\CanonicalEncoder"
+    ],
     "digest_of": "src"
 }

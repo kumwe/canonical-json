@@ -1,7 +1,7 @@
 {
   "schema": "kumwe-package-capabilities/v1",
   "package": "kumwe/canonical-json",
-  "release": "0.1.0",
+  "release": "0.1.1",
   "namespace": "Kumwe\\CanonicalJson\\",
   "responsibility": "Generic canonical JSON profile, operation bounds, findings and conformance corpus.",
   "non_responsibilities": [
@@ -15,6 +15,7 @@
       "title": "Generic canonical JSON semantic contract",
       "description": "Immutable profile identity, explicit bounded operation metadata and stable refusal vocabulary.",
       "symbols": [
+        "Kumwe\\CanonicalJson\\CanonicalEncoder",
         "Kumwe\\CanonicalJson\\Profile",
         "Kumwe\\CanonicalJson\\Limits",
         "Kumwe\\CanonicalJson\\FindingCode"

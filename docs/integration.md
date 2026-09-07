@@ -35,3 +35,12 @@ The native Engine owns algorithms, streaming/batching, bounds, ABI, fuzz/sanitiz
 The extension owns PHP marshalling/handle/lifecycle/PHPT tests. This package owns semantic identity,
 limits, finding vocabulary, corpus and public API tests. This split removes repeated framework testing
 from App at the correct implementation cutover, without discarding proof for a still-active executor.
+
+## Explicit generic execution port
+
+`Kumwe\CanonicalJson\CanonicalEncoder` declares `encode(mixed): string` and `digest(mixed): string`.
+Portable packages receive this contract explicitly. No executor, container provider or runtime selector
+is shipped here. The implementation must preserve GenericV1 bytes, ordered refusals and operation limits;
+digest enforces the same limits as encoding. Computation owns the native adapter after verified native
+releases. App may adapt its existing executor during the staged adoption, retaining its tests until the
+Computation cutover. Distinct Definition, SDK, Runtime and Studio profiles keep their current owners.

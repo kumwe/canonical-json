@@ -6,6 +6,7 @@ namespace Kumwe\CanonicalJson\Tests\Oracle;
 
 use InvalidArgumentException;
 use JsonException;
+use Kumwe\CanonicalJson\CanonicalEncoder;
 use Kumwe\CanonicalJson\FindingCode;
 use Kumwe\CanonicalJson\Limits;
 use RuntimeException;
@@ -17,7 +18,7 @@ use stdClass;
  * @internal
  * @since 0.1.0
  */
-final class Replay
+final class Replay implements CanonicalEncoder
 {
     private int $nodes = 0;
     private string $output = '';
@@ -36,6 +37,11 @@ final class Replay
         $this->emit($normalized);
 
         return $this->output;
+    }
+
+    public function digest(mixed $value): string
+    {
+        return hash('sha256', $this->encode($value));
     }
 
     private function normalize(mixed $value, int $depth): mixed

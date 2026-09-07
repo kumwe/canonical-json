@@ -63,6 +63,7 @@ final class CorpusTest extends TestCase
                 $this->assertSame($output, $oracle->encode($value), 'Exact bytes ' . $id);
                 $this->assertSame($output, CanonicalJson::encode($value), 'Frozen App source parity ' . $id);
                 $this->assertSame($expected['sha256'], hash('sha256', $output), 'Digest ' . $id);
+                $this->assertSame($expected['sha256'], $oracle->digest($value), 'Execution port digest ' . $id);
                 $this->assertSame($expected['sha256'], CanonicalJson::digest($value), 'Source digest ' . $id);
             }
         } finally {

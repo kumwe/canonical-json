@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kumwe\CanonicalJson\Tests\Case;
 
 use InvalidArgumentException;
+use Kumwe\CanonicalJson\CanonicalEncoder;
 use Kumwe\CanonicalJson\FindingCode;
 use Kumwe\CanonicalJson\Limits;
 use Kumwe\CanonicalJson\Profile;
@@ -63,9 +64,9 @@ final class MetadataTest extends TestCase
         $ownership = $this->json('resources/ownership/v1.json');
         $this->assertSame($corpus['sha256'], $ownership['corpus_sha256'], 'Native ownership uses the same corpus');
         $this->assertSame(
-            [FindingCode::class, Limits::class, Profile::class],
+            [CanonicalEncoder::class, FindingCode::class, Limits::class, Profile::class],
             $ownership['composer_owned'],
-            'Exactly three Composer owners, no native collision'
+            'Exactly four Composer owners, no native collision'
         );
         $this->assertSame([], $ownership['extension_owned_classes'], 'No extension class is implemented here');
         $this->assertSame(null, Profile::tryFrom('generic-v1'), 'Unqualified profile cannot select semantics');

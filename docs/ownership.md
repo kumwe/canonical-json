@@ -40,3 +40,12 @@ it is not an attestation that a future extension exists. Its release must replay
 The test-only frozen source is an oracle under `tests/Oracle/CanonicalJson.php`; its namespace is the
 only semantic source change. It is absent from the consumer archive and is never runtime-selectable.
 The fixture inventory records the original source checksum so adoption can detect App drift exactly.
+
+## Explicit generic execution port
+
+`Kumwe\CanonicalJson\CanonicalEncoder` declares `encode(mixed): string` and `digest(mixed): string`.
+Portable packages receive this contract explicitly. No executor, container provider or runtime selector
+is shipped here. The implementation must preserve GenericV1 bytes, ordered refusals and operation limits;
+digest enforces the same limits as encoding. Computation owns the native adapter after verified native
+releases. App may adapt its existing executor during the staged adoption, retaining its tests until the
+Computation cutover. Distinct Definition, SDK, Runtime and Studio profiles keep their current owners.

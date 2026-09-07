@@ -16,7 +16,7 @@ final class ArchitectureTest extends TestCase
             throw new RuntimeException('Cannot prepare isolated architecture fixtures.');
         }
         $paths = ['composer.json', 'tools/verify-architecture.php', 'src/Profile.php',
-            'src/FindingCode.php', 'src/Limits.php'];
+            'src/FindingCode.php', 'src/Limits.php', 'src/CanonicalEncoder.php'];
         try {
             foreach ($paths as $path) {
                 file_put_contents($workspace . '/' . $path, $this->read($path));

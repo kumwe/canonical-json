@@ -39,8 +39,8 @@ target:
   repository: "https://github.com/kumwe/canonical-json"
   artifact_identity: "kumwe/canonical-json"
   canonical_namespace_or_abi: "Kumwe\\CanonicalJson"
-  branch: "agent/extract-canonical-json-semantics-v2"
-  pull_request: "https://github.com/kumwe/canonical-json/pull/1"
+  branch: "agent/canonical-encoder-port-v2"
+  pull_request: "https://github.com/kumwe/canonical-json/pull/7"
 ownership:
   responsibility: "Generic canonical JSON semantic profile, budgets, findings and language-neutral corpus."
   non_responsibilities:
@@ -53,19 +53,19 @@ ownership:
   public_manifests:
     -
       path: "resources/public-api/v1.json"
-      sha256: "6abe0873accaea2a0c517e451a6c9662d31dac2482090d7bdcc242dda5b2f72c"
+      sha256: "43b126b3215555482b3d439cc2521808f16d252a99e0036138d6607a3c3a3465"
     -
       path: "resources/capabilities/v1.json"
-      sha256: "207db7763acd13900d810e406a56a52853096f59623f27cfbd24b11fc21521f6"
+      sha256: "fba51564639daa35180b354084649bacff466728ba531c2104b0a93d5136143b"
     -
       path: "resources/service-map/v1.json"
-      sha256: "bb68285b5544c3c06e1d687c5ea453165d4743d6601e7f2b1c17feef25858a90"
+      sha256: "a9426334ed36972ab82781a64ace58bbac058aed884d5aa091354bbeb82e4108"
     -
       path: "resources/semantics/v1.json"
       sha256: "621b7dfae136ce7635a234f047e7b744a06e2b7ad57c28ae09aeaa4a4308979c"
     -
       path: "resources/ownership/v1.json"
-      sha256: "93b68f1268ad1f654295c80293f33d69601640f088d0e648b7e94cf28a3d828b"
+      sha256: "a2f66ab45521f54f1fc8145f6805ee8827cf098e44f33d8bae8c0f4f9fb34934"
     -
       path: "resources/corpus/v1.json"
       sha256: "84d21b12e7a2bfd752356d9a6e664bcb332e209d19017e7634e7485a4fa4e250"
@@ -113,13 +113,14 @@ framework_php:
     service_lifetimes:
       - "Immutable semantic values are supplied explicitly per operation."
     configuration_keys: []
-    provider_absence_reason: "No runtime service; Computation owns future native binding."
+    provider_absence_reason: "Explicit CanonicalEncoder port; Computation owns future native binding."
 native_cpp: null
 php_extension: null
 tests:
   moved_or_added:
     - "tests/Case/CorpusTest.php"
     - "tests/Case/MetadataTest.php"
+    - "tests/Case/CanonicalEncoderTest.php"
     - "tests/Case/ArchitectureTest.php"
     - "tests/Oracle/CanonicalJson.php frozen test-only semantic oracle"
     - "tests/Oracle/Replay.php test-only bounded replay"
@@ -143,7 +144,7 @@ documentation:
   integration_or_consumer: "docs/integration.md"
   examples:
     - "examples/typed-consumer.php"
-  changelog_record: "CHANGELOG.md / 0.1.0"
+  changelog_record: "CHANGELOG.md / 0.1.1"
 release_expectations:
   version_policy: "SemVer; pre-1.0 exact pins; profile changes need reviewed minor successor."
   expected_artifact_types:
@@ -213,10 +214,10 @@ governance:
     - "NRM-2026-009"
   completion_claim: false
 decisions:
-  - "Semantic extraction introduces three metadata types, not a moved PHP executor."
+  - "Three metadata types and the CanonicalEncoder port; production execution remains outside this package."
   - "Generic-v1 freezes finite binary64 rendering with serialize_precision=-1 behavior."
   - "Explicit input/depth/node/output limits are safety refinements requiring later App cutover proof."
-  - "No ConfigProvider, aliases, native classes, execution interface or PHP fallback in this package."
+  - "CanonicalEncoder is an injected port; no provider, concrete executor, native class or PHP fallback."
   - "Empty extracted_symbols is intentional: the new DTO/enums have no historical App FQCN."
 blockers:
   - "App adoption awaits independent immutable release verification."
@@ -290,8 +291,8 @@ shipped paths, documented types, corpus checksum and example through the consume
 Final-head CI results and exact tested commit/archive identity belong to external evidence, not this file.
 No App adoption, native execution, publication or roadmap acceptance is claimed by these package checks.
 
-Observed locally on PHP 8.5.10: 9 tests and 568 assertions pass, including 79 corpus vectors; strict
-PHPStan, PSR-12, documentation, manifests, architecture and the 28-file archive consumer pass. App's
+Observed locally on PHP 8.5.10: 12 tests and 635 assertions pass, including 79 corpus vectors; strict
+PHPStan, PSR-12, documentation, manifests, architecture and the archive consumer pass. App's
 actual strict PackageManifests loader accepts this package as v2-manifested. The local combined check
 was stopped by the advisory endpoint timing out; its online security result is established by CI.
 

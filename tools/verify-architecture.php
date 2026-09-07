@@ -18,7 +18,7 @@ $root = dirname(__DIR__);
 $source = $root . '/src';
 $namespaceRoot = 'Kumwe\\CanonicalJson';
 $layers = [
-    '' => ['Profile', 'FindingCode', 'Limits'],
+    '' => ['CanonicalEncoder', 'Profile', 'FindingCode', 'Limits'],
 ];
 $runtimeSelection = [
     'json_encode', 'hash', 'hash_init', 'getenv', 'exec', 'system', 'shell_exec',
@@ -41,7 +41,7 @@ sort($files);
 $expectedFiles = array_map(static fn (string $name): string => $source . '/' . $name . '.php', $layers['']);
 sort($expectedFiles);
 if ($files !== $expectedFiles) {
-    $errors[] = 'The semantic source inventory must contain exactly Profile, FindingCode and Limits.';
+    $errors[] = 'The semantic source inventory must contain exactly CanonicalEncoder, Profile, FindingCode and Limits.';
 }
 
 foreach ($files as $path) {
