@@ -1,0 +1,32 @@
+{
+  "schema": "kumwe-package-capabilities/v1",
+  "package": "kumwe/canonical-json",
+  "release": "0.1.0",
+  "namespace": "Kumwe\\CanonicalJson\\",
+  "responsibility": "Generic canonical JSON profile, operation bounds, findings and conformance corpus.",
+  "non_responsibilities": [
+    "PHP/native encoding or hashing execution.",
+    "Definition, Runtime, Studio/Producer and OpenAPI canonical profiles.",
+    "Native readiness, provider binding, persistence, crypto and App authority."
+  ],
+  "capabilities": [
+    {
+      "id": "canonical-json.semantics",
+      "title": "Generic canonical JSON semantic contract",
+      "description": "Immutable profile identity, explicit bounded operation metadata and stable refusal vocabulary.",
+      "symbols": [
+        "Kumwe\\CanonicalJson\\Profile",
+        "Kumwe\\CanonicalJson\\Limits",
+        "Kumwe\\CanonicalJson\\FindingCode"
+      ],
+      "documentation": [
+        "docs/public-api.md",
+        "docs/semantics.md",
+        "docs/corpus.md",
+        "docs/ownership.md"
+      ]
+    }
+  ],
+  "native_requirements": null,
+  "deprecations": []
+}

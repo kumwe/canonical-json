@@ -1,0 +1,18 @@
+{
+  "schema": "kumwe-native-semantic-ownership/v1",
+  "semantic_owner": "kumwe/canonical-json",
+  "composer_owned": [
+    "Kumwe\\CanonicalJson\\FindingCode",
+    "Kumwe\\CanonicalJson\\Limits",
+    "Kumwe\\CanonicalJson\\Profile"
+  ],
+  "extension_namespace": "Kumwe\\Engine\\",
+  "extension_owner": "kumwe/kumwe-engine",
+  "extension_owned_classes": [],
+  "native_implementation_owner": "kumwe/engine",
+  "binding_owner": "kumwe/computation",
+  "status": "semantic-side-boundary-frozen",
+  "native_signature_agreement": "Exact FQCN/ABI agreement is required before native implementation.",
+  "capability": "canonical-json.semantics",
+  "corpus_sha256": "84d21b12e7a2bfd752356d9a6e664bcb332e209d19017e7634e7485a4fa4e250"
+}

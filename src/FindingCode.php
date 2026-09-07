@@ -14,7 +14,7 @@ namespace Kumwe\CanonicalJson;
 enum FindingCode: string
 {
     /**
-     * Object, resource, callable or another unsupported source value.
+     * Object (including closure), resource or another unsupported source value.
      *
      * @since 0.1.0
      */
@@ -54,4 +54,11 @@ enum FindingCode: string
      * @since 0.1.0
      */
     case OutputLimit = 'canonical.output-limit';
+
+    /**
+     * Raw value/key data exceeds the input admission budget before UTF-8 inspection or sorting.
+     *
+     * @since 0.1.0
+     */
+    case InputLimit = 'canonical.input-limit';
 }
