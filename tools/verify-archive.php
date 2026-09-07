@@ -109,6 +109,7 @@ foreach ($iterator as $file) {
 $requiredRoots = ['CHANGELOG.md', 'CHARTER.md', 'LICENSE', 'MIGRATION-HANDOFF.md', 'README.md', 'composer.json'];
 $requiredShipped = [
     'docs/architecture.md',
+    'docs/test-ownership.md',
     'docs/semantics.md',
     'docs/ownership.md',
     'docs/corpus.md',
