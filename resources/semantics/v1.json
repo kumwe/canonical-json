@@ -1,0 +1,27 @@
+{
+  "schema": "kumwe-canonical-json-semantics/v1",
+  "profile": "kumwe-canonical-json/generic-v1",
+  "profile_case": "GenericV1",
+  "limits": {
+    "maxDepth": 64,
+    "maxNodes": 100000,
+    "maxOutputBytes": 8388608,
+    "maxInputBytes": 16777216
+  },
+  "findings": {
+    "UnsupportedType": "canonical.unsupported-type",
+    "NonFiniteNumber": "canonical.non-finite-number",
+    "InvalidUtf8": "canonical.invalid-utf8",
+    "DepthLimit": "canonical.depth-limit",
+    "NodeLimit": "canonical.node-limit",
+    "OutputLimit": "canonical.output-limit",
+    "InputLimit": "canonical.input-limit"
+  },
+  "corpus": {
+    "path": "resources/corpus/v1.json",
+    "sha256": "84d21b12e7a2bfd752356d9a6e664bcb332e209d19017e7634e7485a4fa4e250",
+    "cases": 79
+  },
+  "specification": "docs/semantics.md",
+  "ownership": "resources/ownership/v1.json"
+}

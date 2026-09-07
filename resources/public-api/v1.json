@@ -1,0 +1,141 @@
+{
+    "schema": "kumwe-package-public-api/v1",
+    "package": "kumwe/canonical-json",
+    "release": "0.1.0",
+    "namespace": "Kumwe\\CanonicalJson\\",
+    "symbols": {
+        "Kumwe\\CanonicalJson\\FindingCode": {
+            "kind": "enum",
+            "stability": "stable",
+            "file": "src/FindingCode.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": null,
+            "interfaces": [
+                "BackedEnum",
+                "UnitEnum"
+            ],
+            "constants": {
+                "DepthLimit": {
+                    "type": "Kumwe\\CanonicalJson\\FindingCode"
+                },
+                "InputLimit": {
+                    "type": "Kumwe\\CanonicalJson\\FindingCode"
+                },
+                "InvalidUtf8": {
+                    "type": "Kumwe\\CanonicalJson\\FindingCode"
+                },
+                "NodeLimit": {
+                    "type": "Kumwe\\CanonicalJson\\FindingCode"
+                },
+                "NonFiniteNumber": {
+                    "type": "Kumwe\\CanonicalJson\\FindingCode"
+                },
+                "OutputLimit": {
+                    "type": "Kumwe\\CanonicalJson\\FindingCode"
+                },
+                "UnsupportedType": {
+                    "type": "Kumwe\\CanonicalJson\\FindingCode"
+                }
+            },
+            "properties": {},
+            "methods": {},
+            "deprecated": null
+        },
+        "Kumwe\\CanonicalJson\\Limits": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Limits.php",
+            "abstract": false,
+            "final": true,
+            "readonly": true,
+            "parent": null,
+            "interfaces": [],
+            "constants": {},
+            "properties": {
+                "maxDepth": {
+                    "type": "int",
+                    "static": false,
+                    "readonly": true
+                },
+                "maxInputBytes": {
+                    "type": "int",
+                    "static": false,
+                    "readonly": true
+                },
+                "maxNodes": {
+                    "type": "int",
+                    "static": false,
+                    "readonly": true
+                },
+                "maxOutputBytes": {
+                    "type": "int",
+                    "static": false,
+                    "readonly": true
+                }
+            },
+            "methods": {
+                "__construct": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "maxDepth",
+                            "type": "int",
+                            "optional": true,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "maxNodes",
+                            "type": "int",
+                            "optional": true,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "maxOutputBytes",
+                            "type": "int",
+                            "optional": true,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "maxInputBytes",
+                            "type": "int",
+                            "optional": true,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": null
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\CanonicalJson\\Profile": {
+            "kind": "enum",
+            "stability": "stable",
+            "file": "src/Profile.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": null,
+            "interfaces": [
+                "BackedEnum",
+                "UnitEnum"
+            ],
+            "constants": {
+                "GenericV1": {
+                    "type": "Kumwe\\CanonicalJson\\Profile"
+                }
+            },
+            "properties": {},
+            "methods": {},
+            "deprecated": null
+        }
+    },
+    "extension_points": [],
+    "digest_of": "src"
+}

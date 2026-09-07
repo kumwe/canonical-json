@@ -1,0 +1,38 @@
+{
+  "schema": "kumwe-canonical-json-extraction/v1",
+  "source_repository": "https://github.com/kumwe/app",
+  "source_commit": "960ce8ec00cf724a7cae03e5ba09c4852c9ab54e",
+  "semantic_source": {
+    "path": "src/Shared/Domain/CanonicalJson.php",
+    "sha256": "df80b60dd4cf382a443894b69971fb92fe31cdc62318e5d1b185571534af41a1",
+    "frozen_oracle": "tests/Oracle/CanonicalJson.php"
+  },
+  "consumers": [
+    "src/Administrator/Http/Handler/AdministratorAccessControlHandler.php",
+    "src/Application/Automation/ChangePlan.php",
+    "src/Application/Automation/IdempotencyRecord.php",
+    "src/Application/Automation/IdempotencyResult.php",
+    "src/Application/Automation/JobEnvelope.php",
+    "src/Application/Automation/ScheduleOccurrenceKey.php",
+    "src/Audit/Domain/AuditAnchorDigest.php",
+    "src/Audit/Domain/AuditEventDigest.php",
+    "src/BusinessIntegration/Application/EventContractRegistry.php",
+    "src/BusinessIntegration/Domain/RecordedEventEnvelope.php",
+    "src/BusinessIntegration/Infrastructure/DoctrineOutboxStore.php",
+    "src/BusinessReporting/Infrastructure/DoctrineProjectionStore.php",
+    "src/Identity/Application/Administration/AccessControlService.php",
+    "tests/Unit/Application/Automation/CanonicalJsonTest.php",
+    "tests/Unit/Identity/Application/Administration/AccessControlServiceTest.php"
+  ],
+  "old_to_new_symbols": [],
+  "new_symbols": [
+    "Kumwe\\CanonicalJson\\FindingCode",
+    "Kumwe\\CanonicalJson\\Limits",
+    "Kumwe\\CanonicalJson\\Profile"
+  ],
+  "retained_executor_tests": [
+    "tests/Unit/Application/Automation/CanonicalJsonTest.php"
+  ],
+  "phase2_removals": [],
+  "future_cutover_owner": "kumwe/computation"
+}
