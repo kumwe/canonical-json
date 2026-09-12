@@ -100,7 +100,7 @@ final class MetadataTest extends TestCase
             'resources/semantics/v1.json', 'resources/ownership/v1.json', 'resources/corpus/v1.json',
         ], $paths, 'Release record pins the reviewed public artifact set');
         foreach ($paths as $index => $path) {
-            $this->assertSame(hash('sha256', $this->read($path)), $matches[2][$index], 'Release record digest ' . $path);
+            $this->assertSame(hash('sha256', $this->read($path)), $matches[2][$index], 'Record digest ' . $path);
         }
     }
 }
