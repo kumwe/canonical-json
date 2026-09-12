@@ -203,7 +203,9 @@ blockers:
   - "Before initial publishing merge, maintainers must protect main and enable immutable releases."
 ---
 
-# Package contract
+# Release contract
+
+## Package contract
 
 This `kumwe-package-release-record/v1` record preserves consumer qualification requirements,
 source provenance and exact manifest/corpus identities. Migration and change-set IDs are stable
