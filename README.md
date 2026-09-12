@@ -1,9 +1,16 @@
 # Kumwe Canonical JSON
 
-[![Packagist version](https://img.shields.io/packagist/v/kumwe/canonical-json)](https://packagist.org/packages/kumwe/canonical-json)
-[![CI](https://github.com/kumwe/canonical-json/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kumwe/canonical-json/actions/workflows/ci.yml?query=branch%3Amain)
-[![PHP requirement](https://img.shields.io/packagist/dependency-v/kumwe/canonical-json/php)](composer.json)
-[![License](https://img.shields.io/packagist/l/kumwe/canonical-json)](LICENSE)
+[![Packagist version][version-badge]][package]
+[![CI][ci-badge]][ci]
+[![PHP requirement][php-badge]](composer.json)
+[![License][license-badge]](LICENSE)
+
+[version-badge]: https://img.shields.io/packagist/v/kumwe/canonical-json
+[package]: https://packagist.org/packages/kumwe/canonical-json
+[ci-badge]: https://github.com/kumwe/canonical-json/actions/workflows/ci.yml/badge.svg?branch=main
+[ci]: https://github.com/kumwe/canonical-json/actions/workflows/ci.yml?query=branch%3Amain
+[php-badge]: https://img.shields.io/packagist/dependency-v/kumwe/canonical-json/php
+[license-badge]: https://img.shields.io/packagist/l/kumwe/canonical-json
 
 Canonical JSON contracts, bounded operation metadata and a language-neutral conformance corpus
 for deterministic encoding and digests. The namespace is `Kumwe\CanonicalJson`.
