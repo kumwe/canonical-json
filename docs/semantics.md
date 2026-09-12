@@ -87,5 +87,5 @@ Code identity, not exception message text, is normative.
 These bounds and codes are an explicit safety refinement, not a claim about existing App refusals.
 The historical generic source has no explicit input/node/output limit and recursively normalizes before
 PHP's JSON depth refusal. Its floating representation depends on ambient serialize_precision.
-Phase 1 does not change App behavior. Future Computation cutover must measure real consumer envelopes,
+Installing this semantic package does not change Core behavior. Executor replacement must measure consumer envelopes,
 audit precision settings and persisted digest compatibility, replay the corpus and retain refusal proof.

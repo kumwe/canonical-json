@@ -1,9 +1,8 @@
 ---
-schema: "kumwe-migration-handoff/v2"
+schema: "kumwe-package-release-record/v1"
 artifact_kind: "framework_php"
 migration_id: "KUMWE-MIG-2026-007"
 change_set: "KUMWE-CS-2026-007"
-state: "draft_pr_open"
 source:
   app:
     repository: "https://github.com/kumwe/app"
@@ -33,14 +32,10 @@ source:
     - "Extension SDK 0.2.4 has a distinct definition/manifest canonicalizer that rejects floats."
     - "Conversion 0.1.2 owns exact decimal values; no runtime dependency selected."
     - "No Kumwe runtime dependencies; inspected installed sources establish exclusions only."
-  active_related_pull_requests:
-    - "https://github.com/kumwe/app/pull/135"
 target:
   repository: "https://github.com/kumwe/canonical-json"
   artifact_identity: "kumwe/canonical-json"
   canonical_namespace_or_abi: "Kumwe\\CanonicalJson"
-  branch: "agent/canonical-encoder-port-v2"
-  pull_request: "https://github.com/kumwe/canonical-json/pull/7"
 ownership:
   responsibility: "Generic canonical JSON semantic profile, budgets, findings and language-neutral corpus."
   non_responsibilities:
@@ -102,9 +97,9 @@ framework_php:
       - "tests/Unit/Application/Automation/CanonicalJsonTest.php"
       - "tests/Unit/Identity/Application/Administration/AccessControlServiceTest.php"
     external:
-      - "kumwe/engine future C ABI corpus replay"
-      - "kumwe/kumwe-engine future PHPT corpus replay"
-      - "kumwe/computation future semantic adapter/readiness agreement"
+      - "kumwe/engine C ABI corpus replay"
+      - "kumwe/kumwe-engine PHPT corpus replay"
+      - "kumwe/computation semantic adapter/readiness agreement"
   dependency_injection:
     mode: "direct"
     provider: null
@@ -113,7 +108,7 @@ framework_php:
     service_lifetimes:
       - "Immutable semantic values are supplied explicitly per operation."
     configuration_keys: []
-    provider_absence_reason: "Explicit CanonicalEncoder port; Computation owns future native binding."
+    provider_absence_reason: "Explicit CanonicalEncoder port; Computation owns native binding."
 native_cpp: null
 php_extension: null
 tests:
@@ -152,14 +147,13 @@ release_expectations:
     - "GitHub immutable release and version tag"
   required_checks:
     - "composer check"
-    - "Protected main before publication; GitHub immutable releases enabled beforehand."
+    - "Complete reusable Package gate and release automation regression tests."
     - "Independent source/tag/archive/API/corpus/registry verification after human merge."
   required_registry_or_installer: "Packagist / Composer"
   required_external_attestation: true
-next_task:
-  phase_name: "Canonical JSON Phase 2 semantic/API/corpus adoption only"
+consumer_contract:
   permitted_only_when:
-    - "Human merge and immutable release-on-record publication are observed."
+    - "The selected published artifact is independently verified under docs/releasing.md."
     - "Fresh external RELEASE-ATTESTATION.yaml verifies the exact artifact, manifests, corpus and clean consumer."
     - "App source drift has been reviewed without deleting newer portable behavior."
   consumer_repository: "kumwe/app"
@@ -181,12 +175,12 @@ next_task:
     - "Retain generic App executor tests and all host responsibility tests."
     - "Add exact installed semantic profile/corpus identity and capability-index integration proof."
   di_or_provisioning_changes:
-    - "None; native provisioning and Computation cutover are separate later tasks."
+    - "No provider is supplied; execution readiness belongs to Computation."
   capability_index_changes:
     - "Record canonical-json.semantics from the exact installed package manifests."
   changelog_and_evidence_changes:
-    - "Record semantic-only adoption; NRM-2026-009; no runtime or roadmap completion claim."
-    - "Commit the external release attestation unchanged and record a serialized integration train."
+    - "Record exact semantic package identity; package installation does not prove execution readiness."
+    - "Commit the external release attestation unchanged with the installed dependency identity."
   verification_commands:
     - "composer install"
     - "composer check-platform-reqs"
@@ -195,23 +189,7 @@ next_task:
     - "composer kumwe:core-growth-check"
     - "composer qa"
     - "Run the App database/browser/deployment and affected acceptance CI matrix."
-concurrency:
-  likely_conflict_files:
-    - "composer.json"
-    - "composer.lock"
-    - "CHANGELOG.md"
-    - "build/capability-index/v1.json"
-    - "docs/architecture/governance/core-growth-baseline.json"
-    - "src/Shared/Domain/CanonicalJson.php"
-  related_migrations: []
-  ownership_conflicts: []
-  integration_train: null
-  resolution_rule: "semantic-preservation"
 governance:
-  roadmap_source_sha256: "a202155ef1a65f5ab293d4f8397ebf4ac430db7f1e877c776bbe7851e6fe18d8"
-  roadmap_refs: []
-  non_roadmap_refs:
-    - "NRM-2026-009"
   completion_claim: false
 decisions:
   - "Three metadata types and the CanonicalEncoder port; production execution remains outside this package."
@@ -220,85 +198,58 @@ decisions:
   - "CanonicalEncoder is an injected port; no provider, concrete executor, native class or PHP fallback."
   - "Empty extracted_symbols is intentional: the new DTO/enums have no historical App FQCN."
 blockers:
-  - "App adoption awaits independent immutable release verification."
-  - "Native concrete FQCN/ABI agreement and Engine/extension releases remain separate work."
+  - "Consumer adoption requires independent verification of the selected published artifact."
+  - "Native selection requires compatible concrete FQCN/ABI, Engine and extension identities."
   - "Before initial publishing merge, maintainers must protect main and enable immutable releases."
 ---
 
-# Canonical JSON Phase 1 handoff
+# Package contract
 
-## Migration/implementation summary
-
-This package owns the generic canonical semantic profile, Limits, Profile and FindingCode metadata,
-and a 79-vector language-neutral corpus. No production PHP canonicalizer moved. The exact frozen
-App source is test-only, checksum-bound and excluded from runtime archives. The original App executor
-and its unit tests continue running until the separate Computation-owned native runtime cutover.
+This `kumwe-package-release-record/v1` record preserves consumer qualification requirements,
+source provenance and exact manifest/corpus identities. Migration and change-set IDs are stable
+cross-references for existing evidence, not workflow state. Current responsibilities are defined
+in [the Core contract](core-contract.md).
 
 ## Public API and responsibility
 
-See docs/public-api.md for every enum case, property, constructor parameter and refusal.
-The standard manifests and resources/semantics/v1.json cover signatures, backed values and defaults.
-docs/ownership.md records why Definition, Runtime, Producer/Studio, SDK and OpenAPI remain separate.
-No ConfigProvider, alias, native FQCN or encoding service is supplied by this package.
+The package owns the [generic execution interface and semantic values](public-api.md).
+It supplies no encoder implementation or native binding. Core owns authority, storage and composition.
 
-## Capability reuse/semantic input review
+## Dependencies and semantic inputs
 
-The App baseline and source checksum are recorded above. Installed Producer 0.2.0, SDK 0.2.4 and
-Conversion 0.1.2 were inspected by behavior and owner. None is a runtime input dependency here.
-Producer UTF-16 ordering is explicitly distinguished by supplementary-plane corpus keys; its object,
-numeric and digest rules cannot silently replace the generic profile. App's capability-index digest
-records the inspected locked graph. This extraction needs no unverified Kumwe dependency coordinate.
+The source baseline and checksums above identify the frozen semantic oracle and inspected
+profiles. They are provenance, not a current inventory of another repository. PHP is the only
+runtime dependency. Distinct profiles retain their [owners](ownership.md).
 
-## Consumer inventory
+## Consumer contract
 
-docs/consumer-inventory.json lists 13 direct production consumers and two test consumers. Phase 2
-must retain their current static executor calls. There is no old-to-new executable FQCN map and no
-package ConfigProvider to wire. Engine/extension will consume the released corpus as conformance data,
-not Composer PHP algorithms. Native concrete signatures are agreed in their own ownership manifest.
+The `consumer_contract` section records installation, verification, capability-index and
+host-retention obligations. Its source paths identify the recorded baseline and must be checked
+against current Core source. Follow [integration guidance](integration.md) when composing the package.
 
 ## Test ownership
 
-The package owns metadata behavior, limits/refusals, complete corpus, API/docs, architecture and archive
-tests. tests/Unit/Application/Automation/CanonicalJsonTest.php stays in App during semantic adoption
-because its PHP executor stays active. After the verified native cutover, Computation removes that
-executor and its implementation-only tests. All host audit/idempotency, persistence, authorization,
-job/integration, projection, lifecycle, recovery and delivery tests stay in App. Mixed tests must split
-by responsibility; do not copy the package suite into App or delete tests solely by directory name.
+The package owns semantic, API, bounds, corpus and archive proof. Core retains integration and
+authority tests and tests for any still-active executor. The exact mappings remain in
+[tests/ownership.json](../tests/ownership.json) and [test ownership guidance](test-ownership.md).
 
-## Next-task execution notes
+## Consumer verification
 
-Before publishing merge, enable protected main and GitHub immutable releases. The workflow refuses
-unprotected release mutation and verifies immutable=true after publication; settings cannot be inferred
-from package CI. After merge/release, a fresh session verifies the public artifact and registry.
-Only its passing external attestation unlocks semantic-only App adoption. Exact-pin through Composer,
-regenerate the capability index and record MIG/CS007, NRM009 and an integration train. Remove no PHP
-executor or executor tests, provision no extension and claim no runtime acceleration in that PR.
+Follow [the release policy](releasing.md) to verify the selected published source/tag, archive,
+registry coordinate, manifests and clean no-dev consumer. Independent verification is separate
+from normal publication. Published versions are listed on
+[GitHub Releases](https://github.com/kumwe/canonical-json/releases) and
+[Packagist](https://packagist.org/packages/kumwe/canonical-json).
 
-## Drift check
+## Compatibility and drift
 
-Diff current App src/Shared/Domain/CanonicalJson.php and its listed consumers/tests against the exact
-baseline above. New portable behavior requires a separate owning-package successor release; keep
-host-specific changes. Compare the current three manifests and corpus digest with this released
-handoff before adoption. Do not resolve shared Composer/evidence changes wholesale with ours/theirs.
+Compare consumers against the recorded source baseline before changing composition. An executor
+replacement requires exact byte/digest compatibility, ordered bounds and refusal recovery proof.
+The [normative corpus](corpus.md) remains checksum-bound and must not be regenerated from the
+implementation under test.
 
-## Validation recipe and observed local results
+## Validation
 
-Run composer install, composer check and the no-dev autoload/example lane. The check includes all
-79 vectors, frozen source byte parity for accepted cases, hostile transport, budget/refusal regressions,
-enum/default agreement and negative architecture fixtures. The archive gate builds a ZIP, installs
-that ZIP as a real dependency with Packagist disabled and no dev/plugins/scripts, then verifies all
-shipped paths, documented types, corpus checksum and example through the consumer autoloader.
-Final-head CI results and exact tested commit/archive identity belong to external evidence, not this file.
-No App adoption, native execution, publication or roadmap acceptance is claimed by these package checks.
-
-Observed locally on PHP 8.5.10: 12 tests and 635 assertions pass, including 79 corpus vectors; strict
-PHPStan, PSR-12, documentation, manifests, architecture and the archive consumer pass. App's
-actual strict PackageManifests loader accepts this package as v2-manifested. The local combined check
-was stopped by the advisory endpoint timing out; its online security result is established by CI.
-
-## Enforced package test ownership
-
-Portable behavior, boundary and conformance evidence is maintained in `tests/ownership.json`,
-validated against the public API and actual test-runner discovery by `composer test:ownership`.
-See `docs/test-ownership.md` for the future-change rule and the precise host boundary.
-This follow-up changes package tests/tooling only; it does not authorize early App test deletion.
+`composer check` validates the package, all six manifest/corpus digests and the clean archive
+consumer. The record and Core contract are required archive files. Runtime API, corpus and
+ownership manifests remain unchanged by documentation maintenance.

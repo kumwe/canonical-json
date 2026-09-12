@@ -1,64 +1,87 @@
 # Kumwe Canonical JSON
 
-Normative generic canonical JSON semantics and conformance fixtures for the native streaming engine
-and deterministic digests. Canonical namespace: `Kumwe\CanonicalJson`.
+[![Packagist version](https://img.shields.io/packagist/v/kumwe/canonical-json)](https://packagist.org/packages/kumwe/canonical-json)
+[![CI](https://github.com/kumwe/canonical-json/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kumwe/canonical-json/actions/workflows/ci.yml?query=branch%3Amain)
+[![PHP requirement](https://img.shields.io/packagist/dependency-v/kumwe/canonical-json/php)](composer.json)
+[![License](https://img.shields.io/packagist/l/kumwe/canonical-json)](LICENSE)
 
-This package supplies **semantic metadata, not an encoder**. There is no `encode()` or `digest()`
-implementation, PHP fallback, native class, provider or runtime selector in this archive.
+Canonical JSON contracts, bounded operation metadata and a language-neutral conformance corpus
+for deterministic encoding and digests. The namespace is `Kumwe\CanonicalJson`.
 
-## Installation and direct use
+The package provides the `CanonicalEncoder` interface, `Profile`, `FindingCode` and `Limits`.
+It ships no encoder implementation, PHP fallback, native class, container provider or runtime selector.
+Computation owns the execution adapter; Core owns its composition and application behavior.
 
-PHP 8.5 on a 64-bit platform is supported. After a maintainer publishes and independently verifies
-the recorded release, install its exact pre-1.0 version with Composer. Do not consume a branch.
+## Installation
+
+Requires PHP 8.5 on a 64-bit platform. Install the published release with an exact pre-1.0 pin:
+
+```bash
+composer require kumwe/canonical-json:0.1.1
+```
+
+See [published releases](https://github.com/kumwe/canonical-json/releases) and
+[compatibility and release verification](docs/releasing.md) before upgrading.
+
+## Usage
 
 ```php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__ . '/vendor/autoload.php';
+
 use Kumwe\CanonicalJson\Limits;
 use Kumwe\CanonicalJson\Profile;
 
 $profile = Profile::GenericV1;
-$budgets = new Limits(maxDepth: 32, maxNodes: 10000, maxOutputBytes: 1048576);
+$limits = new Limits(maxDepth: 32, maxNodes: 10000, maxOutputBytes: 1048576);
 ```
 
-These immutable values are safe to share across operations. They hold no actor, tenant, environment,
-transaction or mutable runtime state. There are no configuration keys, services, factories or aliases.
-Computation owns future interface binding to a compatible native extension and readiness enforcement.
+These immutable values describe semantics and budgets; constructing them does not encode a payload.
+Receive a conforming `CanonicalEncoder` through a constructor or factory when execution is needed.
+Its `encode(mixed): string` returns canonical UTF-8 bytes, and `digest(mixed): string` returns
+64 lowercase hexadecimal SHA-256 characters over exactly those bytes. Both operations enforce the
+same bounds and ordered refusals. See the [complete public API](docs/public-api.md) and
+[standalone metadata example](examples/typed-consumer.php).
 
-## Contract and examples
+The GenericV1 profile preserves list order, sorts map keys by UTF-8 byte order, preserves finite
+binary64 zero fractions, and defines Unicode, slash and control escaping. It is not RFC 8785 JCS.
+Exact decimal strings remain strings; Conversion owns decimal semantics. Definition, SDK, Runtime,
+OpenAPI and Studio profiles have separate owners and must not be replaced without conformance proof.
+
+## Core contract
+
+Core installs and verifies the package version, public manifests and corpus identity, and supplies
+the execution adapter explicitly. This package supplies no configuration keys, services, factories
+or aliases and owns no actor, tenant, transaction or mutable execution state.
+
+Core retains authorization, persistence, audit, idempotency, readiness, lifecycle and delivery tests.
+Replacing an active executor requires byte/digest compatibility and bounded-failure proof before
+removing its implementation tests. A published semantic package alone does not establish native
+execution readiness. See the [Core contract](docs/core-contract.md) and
+[integration guidance](docs/integration.md).
+
+## Documentation
 
 - [Normative semantics and exact bounds](docs/semantics.md)
-- [Complete public API](docs/public-api.md)
 - [Corpus representation and replay](docs/corpus.md)
-- [Native and App ownership](docs/ownership.md)
-- [Integration and test migration](docs/integration.md)
-- [Run the standalone metadata example](examples/typed-consumer.php)
+- [Architecture](docs/architecture.md) and [profile ownership](docs/ownership.md)
+- [Package and host test ownership](docs/test-ownership.md)
+- [Security and compatibility](docs/security.md)
+- [Release policy](docs/releasing.md) and [machine-readable release evidence](docs/release-record.md)
 
-The profile preserves list order, sorts non-list array keys by UTF-8 byte order, preserves finite
-binary64 zero fractions, and emits unescaped Unicode/slashes with defined control escaping.
-It is not RFC 8785 JCS. Exact decimal strings belong to Conversion; strings are never coerced to numbers.
+## Development
 
-The PHP profile enum, finding enum and budgets are directly constructible metadata. Extending semantics
-requires a reviewed profile/corpus successor, not subclassing or a replacement local canonicalizer.
+```bash
+composer install
+composer check
+```
 
-## Validation and adoption
+The complete gate runs behavior and corpus tests, static analysis, API and manifest checks,
+architecture and documentation checks, release integrity tests, and a ZIP installed as a no-dev
+dependency in a fresh Composer project. Test-only oracles are excluded from consumer archives.
+CI also runs the release automation regression suite and checks the no-dev autoloader and example.
 
-Run `composer install`, then `composer check`. This checks all package behavior and corpus fixtures,
-strict analysis, documentation, architecture, manifests and a real ZIP installed as a no-dev dependency
-in a fresh Composer consumer. The frozen test-only oracle is excluded from every consumer archive.
-
-Phase 2 may adopt semantics and metadata after immutable release verification. It keeps the current
-App production executor and its implementation tests. Only Computation's later native cutover can
-remove that executor and those tests. App continues testing composition, persistence, authorization,
-audit/idempotency integration, lifecycle, delivery and recovery.
-
-See [MIGRATION-HANDOFF.md](MIGRATION-HANDOFF.md) for exact paths and gates,
-[releasing](docs/releasing.md) for release-on-record and compatibility,
-and [security](docs/security.md) for resource refusals and reporting. Licensed Apache-2.0.
-
-## Explicit generic execution port
-
-`Kumwe\CanonicalJson\CanonicalEncoder` declares `encode(mixed): string` and `digest(mixed): string`.
-Portable packages receive this contract explicitly. No executor, container provider or runtime selector
-is shipped here. The implementation must preserve GenericV1 bytes, ordered refusals and operation limits;
-digest enforces the same limits as encoding. Computation owns the native adapter after verified native
-releases. App may adapt its existing executor during the staged adoption, retaining its tests until the
-Computation cutover. Distinct Definition, SDK, Runtime and Studio profiles keep their current owners.
+Licensed under [Apache-2.0](LICENSE).

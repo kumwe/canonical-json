@@ -1,25 +1,22 @@
 # Architecture
 
-`src/` contains exactly Profile, FindingCode and Limits. These are semantic identity, stable refusal
-vocabulary and operation metadata. Production code has no encoding/hash algorithm or collaborators.
-The architecture gate fixes this allow-list, one PSR-4 owner, no App import, runtime selection,
-native class, provider, alias, environment I/O or runtime dependency besides PHP.
+`src/` contains four public types: `CanonicalEncoder`, `Profile`, `FindingCode` and `Limits`.
+The interface defines execution requirements; the enum and readonly values supply semantic identity,
+stable refusal vocabulary and operation budgets. The package contains no encoding or hashing algorithm.
 
-`resources/corpus/` is language-neutral release data. Its test-only replay adapter and a frozen oracle
-live under tests/Oracle and never ship. The native Engine must replay the same corpus through its C ABI,
-then the extension through PHPT. Package replay is semantic evidence, not native execution evidence.
-No test depends on the original uploaded ZIP or another repository being present.
+The architecture gate fixes this allowlist and one PSR-4 owner. It rejects Core imports,
+runtime selection, native classes, providers, aliases, environment I/O and runtime dependencies
+besides PHP. Computation owns the execution adapter and Core supplies it explicitly.
 
-Tests inspect behavior and failures, not only source strings. Structural gates supplement that proof
-by blocking an accidental executor or development fixture from a published archive.
-The clean-consumer gate installs the exact built ZIP as a dependency with no dev dependencies,
-plugins, scripts, external registry or path repository, then loads every documented type and example.
+`resources/corpus/` is language-neutral release data. Its replay adapter and frozen oracle live
+under `tests/Oracle/` and never ship. Native Engine conformance runs through its C ABI and
+extension conformance through PHPT must agree with the same corpus digest. Package replay establishes
+semantic evidence, not native execution readiness.
 
-## Explicit generic execution port
+Behavior and refusal tests are supplemented by structural gates that block accidental executors
+or development fixtures from consumer archives. The clean-consumer gate installs the built ZIP as a
+dependency without dev dependencies, plugins, scripts, an external registry or a path repository,
+then loads every documented type and the shipped example.
 
-`Kumwe\CanonicalJson\CanonicalEncoder` declares `encode(mixed): string` and `digest(mixed): string`.
-Portable packages receive this contract explicitly. No executor, container provider or runtime selector
-is shipped here. The implementation must preserve GenericV1 bytes, ordered refusals and operation limits;
-digest enforces the same limits as encoding. Computation owns the native adapter after verified native
-releases. App may adapt its existing executor during the staged adoption, retaining its tests until the
-Computation cutover. Distinct Definition, SDK, Runtime and Studio profiles keep their current owners.
+See [profile ownership](ownership.md), the [Core contract](core-contract.md) and
+[release evidence](release-record.md).
