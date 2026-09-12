@@ -54,7 +54,7 @@
       "Case\\CorpusTest::testReferencesResourcesAndCallbacksCannotEscapeBoundsOrInvokeCode",
       "Case\\CorpusTest::testMalformedBudgetMetadataCannotSilentlyUseDefaults",
       "Case\\MetadataTest::testSemanticManifestFreezesEnumValuesBudgetsAndCorpusIdentity",
-      "Case\\MetadataTest::testEmbeddedHandoffPinsEveryPublishedManifestAndCorpus",
+      "Case\\MetadataTest::testReleaseRecordPinsEveryPublishedManifestAndCorpus",
       "Case\\CanonicalEncoderTest::testBothOperationsRefuseTheSameBoundaryAndRecoverForTheNextCall"
     ],
     "corpora": [

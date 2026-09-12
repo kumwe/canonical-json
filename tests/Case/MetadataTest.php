@@ -89,18 +89,18 @@ final class MetadataTest extends TestCase
         $this->assertSame([], $inventory['phase2_removals'], 'Semantic adoption retains the App executor');
     }
 
-    public function testEmbeddedHandoffPinsEveryPublishedManifestAndCorpus(): void
+    public function testReleaseRecordPinsEveryPublishedManifestAndCorpus(): void
     {
-        $handoff = $this->read('MIGRATION-HANDOFF.md');
-        $count = preg_match_all('/path: "([^"\n]+)"\n\s+sha256: "([0-9a-f]{64})"/', $handoff, $matches);
+        $record = $this->read('docs/release-record.md');
+        $count = preg_match_all('/path: "([^"\n]+)"\n\s+sha256: "([0-9a-f]{64})"/', $record, $matches);
         $this->assertSame(6, $count, 'Every API/semantic/ownership/corpus input is pinned exactly once');
         $paths = $matches[1];
         $this->assertSame([
             'resources/public-api/v1.json', 'resources/capabilities/v1.json', 'resources/service-map/v1.json',
             'resources/semantics/v1.json', 'resources/ownership/v1.json', 'resources/corpus/v1.json',
-        ], $paths, 'Handoff pins the reviewed public artifact set');
+        ], $paths, 'Release record pins the reviewed public artifact set');
         foreach ($paths as $index => $path) {
-            $this->assertSame(hash('sha256', $this->read($path)), $matches[2][$index], 'Handoff digest ' . $path);
+            $this->assertSame(hash('sha256', $this->read($path)), $matches[2][$index], 'Release record digest ' . $path);
         }
     }
 }

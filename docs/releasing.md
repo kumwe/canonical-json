@@ -14,9 +14,8 @@ future release identity. The newest stable SemVer changelog record selects the
 version and must agree with the release manifests. An Unreleased-only changelog
 does not publish; keep work that is not ready under `## Unreleased`.
 
-Exact pre-1.0 pins are required. Semantic-only App adoption, Engine/extension
-implementation and Computation cutover remain separately gated tasks. A proposed
-initial changelog record does not prove that the package was published.
+Exact pre-1.0 pins are required. Semantic package installation, native provisioning and executor replacement require
+their own verification. A changelog record alone does not prove publication.
 
 ## Artifact and consumer verification
 
@@ -37,7 +36,7 @@ release, tag and source identity. Publication does not establish `release-verifi
 Before declaring that state or SDK/App adoption, a fresh independent verifier must
 bind the exact published source/tag, archive digest, manifests, registry coordinate,
 license/security and clean-consumer results in an external RELEASE-ATTESTATION.yaml.
-The artifact and handoff must not invent their own final commit, checksum or
+The artifact and release record must not invent their own final commit, checksum or
 publication evidence. This attestation is separate from normal publication.
 
 Use the current release workflow on the default branch to retry after correcting

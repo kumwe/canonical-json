@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Changed
+
+- Standardize the README with linked package, CI, PHP and license badges and a usable installation example.
+- Consolidate current Core responsibilities and integration guidance; correct the documented encoder interface ownership.
+- Replace the obsolete handover narrative with a compatible machine-readable release record and update archive/digest verification.
+
 ## 0.1.1
 
 ### Added
