@@ -59,4 +59,5 @@ that implementation after verified replacement; split mixed tests by responsibil
 
 Core does not copy this package's unit/corpus suite or run test files from `vendor`.
 The exact package mappings and baseline host responsibilities remain in
-[tests/ownership.json](../tests/ownership.json) and [test ownership guidance](test-ownership.md).
+[tests/ownership.json](https://github.com/kumwe/canonical-json/blob/main/tests/ownership.json)
+and [test ownership guidance](test-ownership.md).

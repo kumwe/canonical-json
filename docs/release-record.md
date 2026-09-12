@@ -231,7 +231,8 @@ against current Core source. Follow [integration guidance](integration.md) when 
 
 The package owns semantic, API, bounds, corpus and archive proof. Core retains integration and
 authority tests and tests for any still-active executor. The exact mappings remain in
-[tests/ownership.json](../tests/ownership.json) and [test ownership guidance](test-ownership.md).
+[tests/ownership.json](https://github.com/kumwe/canonical-json/blob/main/tests/ownership.json)
+and [test ownership guidance](test-ownership.md).
 
 ## Consumer verification
 
